@@ -1,4 +1,4 @@
-# less-detect
+# importless
 
 Get .less/.css files from directory without @imports for automatic stylesheet dependency tracking.
 
