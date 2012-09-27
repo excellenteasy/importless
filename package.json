@@ -1,7 +1,7 @@
 {
   "name": "importless",
   "description": "Find stylesheet files (css and less) and strip away the @imported ones",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/excellenteasy/importless",
   "author": {
     "name": "David Pfahler",
