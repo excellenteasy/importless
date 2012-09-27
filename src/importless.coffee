@@ -8,7 +8,7 @@
 
 'use strict';
 
-glob = require 'glob-whatev'
+glob  = require 'glob-whatev'
 fs 		= require 'fs'
 less  = require 'less'
 path  = require 'path'

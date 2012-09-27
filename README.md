@@ -3,7 +3,7 @@
 Get .less/.css files from directory without @imports for automatic stylesheet dependency tracking.
 
 ## Getting Started
-Install the module with: `npm install less-detect`
+Install the module with: `npm install importless`
 
 ```javascript
 var importless = require('importless'),

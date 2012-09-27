@@ -23,14 +23,16 @@
   ],
   "main": "lib/importless",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "prepublish": "coffee -o lib/ -c src/"
   },
   "dependencies": {
     "less": "latest",
     "glob-whatev": "latest"
   },
   "devDependencies": {
-    "grunt": "~0.4.0a"
+    "grunt": "~0.4.0a",
+    "coffee-script": "~1.2.0"
   },
   "keywords": []
 }

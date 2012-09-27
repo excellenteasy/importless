@@ -1,5 +1,5 @@
 "use strict"
-importless = require '../lib/importless'
+importless = require '../src/importless'
 fs         = require 'fs'
 
 
