@@ -9,9 +9,18 @@
 'use strict';
 
 glob  = require 'glob-whatev'
-fs 		= require 'fs'
+fs    = require 'fs'
 less  = require 'less'
 path  = require 'path'
+
+# ignore option to ignore certain file paths
+# you can provide any minimatch pattern
+# an array of directories that should be ignored
+ignored = []
+exports.setIgnored = (paths=[]) ->
+  if typeof paths is 'string' then paths = [paths]
+  ignored = paths
+exports.getIgnored = -> ignored
 
 # returns an array of filepaths of less/css files 
 # in current directory (or otherwise specified)
@@ -21,12 +30,13 @@ exports.detectDependencies = (directories=['./']) ->
   files = (files or []).concat(@findAll dir) for dir in directories
   files = @cssToLess files
   files = @stripImported files, @getImported(files)
+  files = @stripIgnored files, @getIgnored()
 
 # return both less and css files from directory
 exports.findAll = (directory) ->
-	# remove trailing slash
-	if /\/$/.test(directory) then directory = directory.replace /\/$/, ''
-	return glob.glob("#{directory}/**/*.{less,css}")
+  # remove trailing slash
+  if /\/$/.test(directory) then directory = directory.replace /\/$/, ''
+  return glob.glob("#{directory}/**/*.{less,css}")
 
 # returns array of filespaths where .css files are converted to .less
 exports.cssToLess = (files) ->
@@ -62,4 +72,11 @@ exports.getImported = (files) ->
 exports.stripImported = (files, imported) ->
   files.filter (filepath) ->
     # check if filepath is in imported
-    if filepath in imported then false else true
+    if filepath in imported then return false
+    true
+
+exports.stripIgnored = (files, ignored) ->
+  files.filter (filepath) ->
+    for ignoredPath in ignored
+      if glob.minimatch(filepath, ignoredPath) then return false
+    true
