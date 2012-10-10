@@ -73,6 +73,16 @@ exports['stripImported'] =
     test.deepEqual importless.stripImported(files, importless.getImported(files)), ['test/files/test.less', 'test/files/test2.css']
     test.done()
 
+exports['setIgnored'] = 
+  'ignore `ignore` directory when set': (test) ->
+    test.expect 1
+    importless.setIgnored '**/test2.*'
+    files = importless.findAll 'test/files'
+    test.deepEqual importless.stripIgnored(files, importless.getIgnored()), ['test/files/imported.less', 'test/files/test.less']
+    importless.setIgnored []
+    test.done()
+
+
 exports['detectDependencies'] = 
   setUp: (next) ->
     next()
