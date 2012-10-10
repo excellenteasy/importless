@@ -28,9 +28,9 @@ exports.getIgnored = -> ignored
 exports.detectDependencies = (directories=['./']) ->
   if typeof directories is 'string' then directories = [directories]
   files = (files or []).concat(@findAll dir) for dir in directories
+  files = @stripIgnored files, @getIgnored()
   files = @cssToLess files
   files = @stripImported files, @getImported(files)
-  files = @stripIgnored files, @getIgnored()
 
 # return both less and css files from directory
 exports.findAll = (directory) ->
