@@ -2,11 +2,13 @@
 
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
   // Project configuration.
   grunt.initConfig({
     pkg: '<json:package.json>',
-    test: {
-      files: ['test/**/*.coffee']
+    nodeunit: {
+      all: ['test/**/*.coffee']
     },
     lint: {
       files: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js']
@@ -37,5 +39,7 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', 'test');
+
+  grunt.registerTask('test', 'nodeunit');
 
 };

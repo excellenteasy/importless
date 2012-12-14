@@ -28,11 +28,12 @@
   },
   "dependencies": {
     "less": "latest",
-    "glob-whatev": "latest"
+    "glob-whatev": "latest",
+    "coffee-script": "~1.4.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.0a",
-    "coffee-script": "~1.2.0"
+    "grunt": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.1.1"
   },
   "keywords": []
 }
