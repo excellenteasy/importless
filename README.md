@@ -1,4 +1,4 @@
-# importless
+# importless [![Build Status](https://travis-ci.org/excellenteasy/importless.png?branch=master)](https://travis-ci.org/excellenteasy/importless)
 
 Get .less/.css files from directory without @imports for automatic stylesheet dependency tracking.
 
@@ -11,5 +11,5 @@ var importless = require('importless'),
 ```
 
 ## License
-Copyright (c) 2012 David Pfahler  
+Copyright (c) 2012 David Pfahler
 Licensed under the MIT license.
