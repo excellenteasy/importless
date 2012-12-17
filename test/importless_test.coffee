@@ -1,6 +1,7 @@
 "use strict"
 importless = require '../src/importless'
-fs         = require 'fs'
+fs             = require 'fs'
+_              =  require('grunt').util._
 
 
 #
@@ -30,7 +31,9 @@ exports['findAll'] =
     next()
   'return files from "test" directory with trailing slash': (test) ->
     test.expect 1
-    test.deepEqual importless.findAll("test/files/"), ['test/files/imported.less', 'test/files/test.less', 'test/files/test2.css']
+    actual = _.sortBy importless.findAll("test/files/")
+    expected = _.sortBy ['test/files/imported.less', 'test/files/test.less', 'test/files/test2.css']
+    test.deepEqual actual, expected
     test.done()
 
 exports['rename'] =
@@ -63,27 +66,33 @@ exports['cssToLess'] =
 exports['getImported'] =
   'returns array of imported filepaths': (test) ->
     test.expect 1
-    test.deepEqual importless.getImported(['test/files/test.less']), ['test/files/whereever/someLessFile.less', 'test/files/imported.less', 'test/upperDir.less']
+    actual = _.sortBy importless.getImported(['test/files/test.less'])
+    expected = _.sortBy ['test/files/whereever/someLessFile.less', 'test/files/imported.less', 'test/upperDir.less']
+    test.deepEqual actual, expected
     test.done()
 
-exports['stripImported'] = 
+exports['stripImported'] =
   'return array without imported filepaths': (test) ->
     test.expect 1
     files = importless.findAll 'test/files'
-    test.deepEqual importless.stripImported(files, importless.getImported(files)), ['test/files/test.less', 'test/files/test2.css']
+    actual = _.sortBy importless.stripImported(files, importless.getImported(files))
+    expected = _.sortBy ['test/files/test.less', 'test/files/test2.css']
+    test.deepEqual actual, expected
     test.done()
 
-exports['setIgnored'] = 
+exports['setIgnored'] =
   'ignore `ignore` directory when set': (test) ->
     test.expect 1
     importless.setIgnored '**/test2.*'
     files = importless.findAll 'test/files'
-    test.deepEqual importless.stripIgnored(files, importless.getIgnored()), ['test/files/imported.less', 'test/files/test.less']
+    actual = _.sortBy importless.stripIgnored(files, importless.getIgnored())
+    expected = _.sortBy ['test/files/imported.less', 'test/files/test.less']
+    test.deepEqual actual, expected
     importless.setIgnored []
     test.done()
 
 
-exports['detectDependencies'] = 
+exports['detectDependencies'] =
   setUp: (next) ->
     next()
   tearDown: (next) ->
@@ -91,6 +100,8 @@ exports['detectDependencies'] =
     next()
   'return array of dependencies in directory without imported files': (test) ->
     test.expect 2
-    test.deepEqual importless.detectDependencies('test/files'), ['test/files/test.less', 'test/files/test2.less']
+    actual = _.sortBy importless.detectDependencies('test/files')
+    expected = _.sortBy ['test/files/test.less', 'test/files/test2.less']
+    test.deepEqual actual, expected
     test.ok fs.existsSync 'test/files/test2.less'
     test.done()
